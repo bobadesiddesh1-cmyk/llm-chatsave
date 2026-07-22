@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Threadkeeper</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="tk-top">
+    <img class="tk-logo" src="../icons/icon48.png" alt="" width="22" height="22">
+    <div class="tk-brand">
+      <span class="tk-name">Threadkeeper</span>
+      <span class="tk-tag">Export your AI conversations</span>
+    </div>
+  </header>
+
+  <nav class="tk-tabs" role="tablist">
+    <button class="tk-tab is-active" data-tab="single" role="tab">Export</button>
+    <button class="tk-tab" data-tab="bulk" role="tab">Bulk</button>
+    <button class="tk-tab" data-tab="history" role="tab">History</button>
+    <button class="tk-tab" data-tab="settings" role="tab">Settings</button>
+  </nav>
+
+  <main class="tk-main">
+    <!-- ================= SINGLE ================= -->
+    <section id="panel-single" class="tk-panel is-active" role="tabpanel">
+      <div id="single-unsupported" class="tk-empty" hidden>
+        <p class="tk-empty-title">No conversation detected</p>
+        <p class="tk-empty-sub">Open a conversation on <strong>ChatGPT</strong>, <strong>Claude</strong>, or <strong>Gemini</strong>, then reopen Threadkeeper.</p>
+      </div>
+
+      <div id="single-form" hidden>
+        <div class="tk-field">
+          <label class="tk-label">Conversation</label>
+          <div id="single-title" class="tk-title-box" title=""></div>
+          <div id="single-count" class="tk-hint"></div>
+        </div>
+
+        <div class="tk-field">
+          <label class="tk-label">Format</label>
+          <div class="tk-seg" id="single-format" role="radiogroup">
+            <label><input type="radio" name="format" value="markdown"><span>Markdown</span></label>
+            <label><input type="radio" name="format" value="html"><span>HTML</span></label>
+            <label><input type="radio" name="format" value="pdf"><span>PDF</span></label>
+          </div>
+        </div>
+
+        <div class="tk-field">
+          <label class="tk-label">Include</label>
+          <div class="tk-seg" id="single-scope" role="radiogroup">
+            <label><input type="radio" name="scope" value="full"><span>Full chat</span></label>
+            <label><input type="radio" name="scope" value="user"><span>My messages</span></label>
+            <label><input type="radio" name="scope" value="assistant"><span>AI replies</span></label>
+          </div>
+        </div>
+
+        <div class="tk-field tk-toggles">
+          <label class="tk-check"><input type="checkbox" id="single-timestamps"><span>Include timestamps</span></label>
+          <label class="tk-check"><input type="checkbox" id="single-rolelabels"><span>Include role labels</span></label>
+        </div>
+
+        <button id="single-export" class="tk-btn tk-btn-primary">Export</button>
+        <div id="single-result" class="tk-result" hidden></div>
+      </div>
+    </section>
+
+    <!-- ================= BULK ================= -->
+    <section id="panel-bulk" class="tk-panel" role="tabpanel">
+      <div id="bulk-unsupported" class="tk-empty" hidden>
+        <p class="tk-empty-title">Bulk export unavailable here</p>
+        <p class="tk-empty-sub">Open <strong>ChatGPT</strong>, <strong>Claude</strong>, or <strong>Gemini</strong> so Threadkeeper can read your conversation history.</p>
+      </div>
+
+      <div id="bulk-body" hidden>
+        <div class="tk-row">
+          <button id="bulk-load" class="tk-btn">Load conversations</button>
+          <span id="bulk-load-status" class="tk-hint"></span>
+        </div>
+
+        <div id="bulk-list-wrap" hidden>
+          <div class="tk-list-head">
+            <label class="tk-check"><input type="checkbox" id="bulk-selectall"><span>Select all</span></label>
+            <span id="bulk-selcount" class="tk-hint"></span>
+          </div>
+          <div id="bulk-list" class="tk-list"></div>
+
+          <div class="tk-field">
+            <label class="tk-label">Format for all</label>
+            <div class="tk-seg" id="bulk-format" role="radiogroup">
+              <label><input type="radio" name="bformat" value="markdown"><span>Markdown</span></label>
+              <label><input type="radio" name="bformat" value="html"><span>HTML</span></label>
+            </div>
+            <div class="tk-hint">PDF is single-export only (it needs the print dialog).</div>
+          </div>
+
+          <div class="tk-field">
+            <label class="tk-label">Include</label>
+            <div class="tk-seg" id="bulk-scope" role="radiogroup">
+              <label><input type="radio" name="bscope" value="full"><span>Full chat</span></label>
+              <label><input type="radio" name="bscope" value="user"><span>My messages</span></label>
+              <label><input type="radio" name="bscope" value="assistant"><span>AI replies</span></label>
+            </div>
+          </div>
+
+          <div class="tk-field tk-toggles">
+            <label class="tk-check"><input type="checkbox" id="bulk-timestamps"><span>Include timestamps</span></label>
+            <label class="tk-check"><input type="checkbox" id="bulk-zip" checked><span>Bundle into one ZIP</span></label>
+          </div>
+
+          <button id="bulk-export" class="tk-btn tk-btn-primary">Export selected</button>
+        </div>
+
+        <div id="bulk-progress" class="tk-progress" hidden>
+          <div class="tk-progress-bar"><div id="bulk-progress-fill" class="tk-progress-fill"></div></div>
+          <div class="tk-row tk-row-between">
+            <span id="bulk-progress-label" class="tk-hint"></span>
+            <button id="bulk-cancel" class="tk-btn tk-btn-small">Cancel</button>
+          </div>
+        </div>
+
+        <div id="bulk-results" class="tk-results" hidden></div>
+      </div>
+    </section>
+
+    <!-- ================= HISTORY ================= -->
+    <section id="panel-history" class="tk-panel" role="tabpanel">
+      <div class="tk-row tk-row-between">
+        <span class="tk-label">Recent exports</span>
+        <button id="history-clear" class="tk-btn tk-btn-small">Clear</button>
+      </div>
+      <div id="history-list" class="tk-list"></div>
+      <div id="history-empty" class="tk-empty" hidden>
+        <p class="tk-empty-sub">Your last 20 exports will show up here.</p>
+      </div>
+    </section>
+
+    <!-- ================= SETTINGS ================= -->
+    <section id="panel-settings" class="tk-panel" role="tabpanel">
+      <div class="tk-field">
+        <label class="tk-label">Default format</label>
+        <div class="tk-seg" id="set-format" role="radiogroup">
+          <label><input type="radio" name="sformat" value="markdown"><span>Markdown</span></label>
+          <label><input type="radio" name="sformat" value="html"><span>HTML</span></label>
+          <label><input type="radio" name="sformat" value="pdf"><span>PDF</span></label>
+        </div>
+      </div>
+      <div class="tk-field">
+        <label class="tk-label">Default scope</label>
+        <div class="tk-seg" id="set-scope" role="radiogroup">
+          <label><input type="radio" name="sscope" value="full"><span>Full chat</span></label>
+          <label><input type="radio" name="sscope" value="user"><span>My messages</span></label>
+          <label><input type="radio" name="sscope" value="assistant"><span>AI replies</span></label>
+        </div>
+      </div>
+      <div class="tk-field">
+        <label class="tk-label">Images</label>
+        <div class="tk-seg" id="set-image" role="radiogroup">
+          <label><input type="radio" name="simage" value="embed"><span>Embed (offline)</span></label>
+          <label><input type="radio" name="simage" value="reference"><span>Reference URLs</span></label>
+        </div>
+        <div class="tk-hint">Embedding makes exports self-contained but larger.</div>
+      </div>
+      <div class="tk-field">
+        <label class="tk-label">Bulk output</label>
+        <div class="tk-seg" id="set-bulk" role="radiogroup">
+          <label><input type="radio" name="sbulk" value="zip"><span>One ZIP</span></label>
+          <label><input type="radio" name="sbulk" value="individual"><span>Individual files</span></label>
+        </div>
+      </div>
+      <div class="tk-field tk-toggles">
+        <label class="tk-check"><input type="checkbox" id="set-timestamps"><span>Include timestamps by default</span></label>
+        <label class="tk-check"><input type="checkbox" id="set-rolelabels"><span>Include role labels by default</span></label>
+      </div>
+      <div id="settings-saved" class="tk-saved">Saved ✓</div>
+      <p class="tk-privacy">100% local. No account, no cloud, no data collected.</p>
+    </section>
+  </main>
+
+  <!-- shared utilities (own popup-side window.TK) -->
+  <script src="../shared/base64.js"></script>
+  <script src="../shared/storage.js"></script>
+  <script src="../render/zip.js"></script>
+  <!-- tab modules -->
+  <script src="tabs/single.js"></script>
+  <script src="tabs/bulk.js"></script>
+  <script src="tabs/settings.js"></script>
+  <!-- controller -->
+  <script src="popup.js"></script>
+</body>
+</html>
