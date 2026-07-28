@@ -42,6 +42,13 @@
     var tab = await u.getActiveTab();
     if (!tab) { showUnsupported(); return; }
     tabId = tab.id;
+
+    // A tab opened before the extension was installed has no content script yet;
+    // inject it on demand instead of asking the user to reload.
+    var state = await u.ensureContentScript(tab.id, tab.url);
+    if (state === "unsupported") { showUnsupported(); return; }
+    if (state === "failed") { showUnsupported("blocked"); return; }
+
     try {
       var status = await u.sendToTab(tab.id, { type: "GET_STATUS" });
       if (!status || !status.supported) { showUnsupported(); return; }
@@ -61,9 +68,19 @@
     }
   }
 
-  function showUnsupported() {
+  function showUnsupported(reason) {
     els.unsupported.hidden = false;
     els.form.hidden = true;
+    var title = els.unsupported.querySelector(".tk-empty-title");
+    var sub = els.unsupported.querySelector(".tk-empty-sub");
+    if (reason === "blocked" && title && sub) {
+      title.textContent = "Couldn't connect to this page";
+      sub.innerHTML = "Try reloading the tab, then reopen Threadkeeper.";
+    } else if (title && sub) {
+      title.textContent = "No conversation detected";
+      sub.innerHTML = "Open a conversation on <strong>ChatGPT</strong>, " +
+        "<strong>Claude</strong>, or <strong>Gemini</strong>, then reopen Threadkeeper.";
+    }
   }
 
   async function onExport() {

@@ -6,6 +6,40 @@
   window.TK = window.TK || {};
   TK.popup = TK.popup || {};
 
+  // ---- Content-script injection support --------------------------------------
+  // Must stay in sync with manifest.json > content_scripts[0].js (same order).
+  var CONTENT_FILES = [
+    "shared/base64.js",
+    "shared/idle-chunk.js",
+    "shared/storage.js",
+    "content/adapters/chatgpt.js",
+    "content/adapters/claude.js",
+    "content/adapters/gemini.js",
+    "content/extractor.js",
+    "render/markdown.js",
+    "render/html.js",
+    "render/pdf.js",
+    "content/export-button.js",
+    "content/main.js"
+  ];
+
+  var SUPPORTED_HOSTS = /^https:\/\/(chatgpt\.com|chat\.openai\.com|claude\.ai|gemini\.google\.com)\//i;
+
+  function isSupportedUrl(url) { return !!url && SUPPORTED_HOSTS.test(url); }
+
+  function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+  function ping(tabId) {
+    return new Promise(function (resolve) {
+      try {
+        chrome.tabs.sendMessage(tabId, { type: "PING" }, function (resp) {
+          if (chrome.runtime.lastError) { resolve(false); return; }
+          resolve(!!(resp && resp.ready));
+        });
+      } catch (e) { resolve(false); }
+    });
+  }
+
   // ---- Shared utilities used by the tab modules ------------------------------
 
   TK.popup.util = {
@@ -25,6 +59,36 @@
           });
         } catch (e) { reject(e); }
       });
+    },
+
+    isSupportedUrl: isSupportedUrl,
+
+    /**
+     * Chrome only auto-injects content scripts into pages loaded AFTER the
+     * extension was installed/updated. A tab that was already open therefore has
+     * no content script and can't answer messages. Rather than making the user
+     * reload, we detect that case and inject on demand with chrome.scripting.
+     * Resolves to 'ready' | 'unsupported' | 'failed'.
+     */
+    ensureContentScript: async function (tabId, url) {
+      if (!isSupportedUrl(url)) return "unsupported";
+      if (await ping(tabId)) return "ready";
+      try {
+        await new Promise(function (resolve, reject) {
+          chrome.scripting.executeScript({ target: { tabId: tabId }, files: CONTENT_FILES }, function () {
+            if (chrome.runtime.lastError) { reject(new Error(chrome.runtime.lastError.message)); return; }
+            resolve();
+          });
+        });
+      } catch (e) {
+        return "failed";
+      }
+      // Give the freshly injected scripts a moment to register their listener.
+      for (var i = 0; i < 8; i++) {
+        if (await ping(tabId)) return "ready";
+        await wait(120);
+      }
+      return "failed";
     },
     getRadio: function (name) {
       var el = document.querySelector('input[name="' + name + '"]:checked');

@@ -59,6 +59,10 @@
     var tab = await u.getActiveTab();
     if (!tab) { showUnsupported(); return; }
     tabId = tab.id;
+
+    var state = await u.ensureContentScript(tab.id, tab.url);
+    if (state !== "ready") { showUnsupported(); return; }
+
     try {
       var status = await u.sendToTab(tab.id, { type: "GET_STATUS" });
       if (!status || !status.supported) { showUnsupported(); return; }
