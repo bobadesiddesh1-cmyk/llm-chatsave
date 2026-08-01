@@ -1,12 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
-  <!-- Threadkeeper disabled/greyed icon — shown when a site's adapters can't detect a conversation. -->
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#767b85"/>
-      <stop offset="1" stop-color="#9aa0a8"/>
-    </linearGradient>
-  </defs>
-  <path d="M4 50 C4 19 19 4 50 4 C81 4 96 19 96 50 C96 81 81 96 50 96 C19 96 4 81 4 50 Z" fill="url(#g)"/>
-  <path d="M22 24 h56 a9 9 0 0 1 9 9 v26 a9 9 0 0 1 -9 9 H52 l-15 13 v-13 H22 a9 9 0 0 1 -9 -9 V33 a9 9 0 0 1 9 -9 Z" fill="#fff" fill-opacity="0.9"/>
-  <path d="M50 34 V54 M41 47 L50 56 L59 47" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Threadkeeper — disabled/greyed variant, shown when a site's adapters can't
+       detect a conversation. Same silhouette, drained of colour. -->
+  <rect x="2" y="2" width="96" height="96" rx="23" fill="#3A3D3C"/>
+  <rect x="34" y="30" width="32" height="40" fill="#8C8E8B"/>
+  <path d="M34 40 h32 M34 50 h32 M34 60 h32" stroke="#3A3D3C" stroke-width="4"/>
+  <rect x="25" y="21" width="50" height="10" rx="5" fill="#C9CAC7"/>
+  <rect x="25" y="69" width="50" height="10" rx="5" fill="#C9CAC7"/>
 </svg>

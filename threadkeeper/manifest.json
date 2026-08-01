@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Threadkeeper — Export Your AI Conversations",
   "version": "1.0.0",
-  "description": "One click turns any ChatGPT, Claude, or Gemini conversation into clean Markdown, PDF, or HTML. Bulk-export your history. 100% local — no account, no cloud.",
+  "description": "Export any ChatGPT, Claude, or Gemini chat to Markdown, PDF, or HTML in one click. Bulk-export your history. 100% local.",
   "action": {
     "default_popup": "popup/popup.html",
     "default_title": "Threadkeeper",

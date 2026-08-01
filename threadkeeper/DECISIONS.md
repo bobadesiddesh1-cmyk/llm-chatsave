@@ -127,8 +127,9 @@ brief left something unspecified, the chosen default is logged here.
 
 ## Icons
 
-- **Design:** a chat bubble containing a save/export arrow — communicates "save this
-  conversation" and is legible down to 16px.
+- **Design:** a spool of thread — literal to the name ("Threadkeeper" keeps your
+  threads), a bold single silhouette that stays legible at 16px, and visually
+  distinct in a toolbar full of round, gradient-filled icons.
 - **Source of truth:** `tools/icon.svg` (normal, indigo→violet gradient) and
   `tools/icon-off.svg` (muted grey). The shipped `icons/icon*.png` and
   `icons/icon-off*.png` (16/32/48/128) are rasterized from those two vectors — see
@@ -137,6 +138,28 @@ brief left something unspecified, the chosen default is logged here.
 - `background.js` swaps to the grey `icon-off*` set via `chrome.action.setIcon` when a
   tab's adapter reports it can't detect a conversation, giving the disabled/greyed
   state required by the brief.
+
+## Visual design language
+
+The first pass leaned on defaults that read as machine-generated: an indigo→violet
+gradient (Tailwind's default hue, the most over-represented choice in AI-generated
+UI), drop shadows for depth, cards nested inside cards, and centred bold+muted empty
+states. It was rebuilt around a deliberate system:
+
+- **Palette:** deep ink-green (`#15211F`) and warm "paper" off-white (`#FBFAF8`),
+  with a single gold accent (`#E0A33E` dark / `#A9741C` light). Gold appears *once*
+  per surface — the progress bar, the document rule — and never on chrome.
+- **No gradients, no shadows.** Depth comes from a four-step surface ladder
+  (`--bg` → `--raise` → `--raise2`) plus 1px hairline borders.
+- **Neutral primary action.** The main button is solid ink, not a coloured
+  gradient; colour is reserved for meaning, not decoration.
+- **Typography:** tabular numerals so counts and dates align in columns;
+  letter-spaced small-caps field labels; a tighter scale and smaller radii
+  (6–8px rather than 12–16px).
+- **Controls:** real toggle switches for booleans and square checkboxes for list
+  selection, so the two read as different kinds of choice.
+- Both the popup and the exported HTML document share this language, so an export
+  looks like it came from the same product.
 
 ## Privacy / network
 

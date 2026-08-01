@@ -20,6 +20,14 @@
     els.rolelabels = document.getElementById("single-rolelabels");
     els.exportBtn = document.getElementById("single-export");
     els.result = document.getElementById("single-result");
+    els.site = document.getElementById("tk-site");
+  }
+
+  function setSiteChip(site) {
+    if (!els.site) return;
+    var label = site === "chatgpt" ? "ChatGPT" : site === "claude" ? "Claude" : site === "gemini" ? "Gemini" : "";
+    els.site.textContent = label;
+    els.site.hidden = !label;
   }
 
   function initOnce() {
@@ -54,6 +62,7 @@
       if (!status || !status.supported) { showUnsupported(); return; }
       els.unsupported.hidden = true;
       els.form.hidden = false;
+      setSiteChip(status.site);
       var title = status.title || "Conversation";
       els.title.textContent = title;
       els.title.title = title;
@@ -71,6 +80,7 @@
   function showUnsupported(reason) {
     els.unsupported.hidden = false;
     els.form.hidden = true;
+    setSiteChip(null);
     var title = els.unsupported.querySelector(".tk-empty-title");
     var sub = els.unsupported.querySelector(".tk-empty-sub");
     if (reason === "blocked" && title && sub) {
