@@ -83,6 +83,10 @@ Found a bug, or an export that didn't come out right?
 [Open an issue](../../issues) — including the site and what the conversation
 contained (code blocks, tables, images) helps a lot.
 
+## Privacy
+
+Read the full [Privacy Policy](PRIVACY.md). Short version: nothing is collected.
+
 ## License
 
 MIT
