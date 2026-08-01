@@ -1,0 +1,338 @@
+<meta charset="utf-8">
+<title>Privacy Policy &mdash; Threadkeeper</title>
+<meta name="description" content="Threadkeeper's privacy policy: what data it collects (none), what permissions it uses, and why.">
+<style>
+  :root {
+    --bg:      #FBFAF8;
+    --paper:   #FFFFFF;
+    --ink:     #17181B;
+    --body:    #3D3B36;
+    --mute:    #7C786F;
+    --line:    #E5E1D8;
+    --line2:   #D7D2C5;
+    --accent:  #8A5A14;
+    --accent-bg: #F3ECDD;
+    --good:    #2F6B45;
+    --good-bg: #EAF3EC;
+  }
+  :root[data-theme="dark"] {
+    --bg:      #131513;
+    --paper:   #191B19;
+    --ink:     #F0EFEA;
+    --body:    #C9C6BD;
+    --mute:    #8B887F;
+    --line:    #2B2D29;
+    --line2:   #3A3C36;
+    --accent:  #E0A33E;
+    --accent-bg: #2A2417;
+    --good:    #7FC996;
+    --good-bg: #1A2A20;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:      #131513;
+      --paper:   #191B19;
+      --ink:     #F0EFEA;
+      --body:    #C9C6BD;
+      --mute:    #8B887F;
+      --line:    #2B2D29;
+      --line2:   #3A3C36;
+      --accent:  #E0A33E;
+      --accent-bg: #2A2417;
+      --good:    #7FC996;
+      --good-bg: #1A2A20;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--body);
+    font: 16px/1.7 ui-serif, "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent-bg); color: var(--ink); }
+
+  .shell { max-width: 720px; margin: 0 auto; padding: 0 24px 80px; }
+
+  header.masthead {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 48px 0 28px;
+  }
+  header.masthead .mark { flex: 0 0 auto; border-radius: 8px; display: block; }
+  header.masthead .word {
+    font: 600 15px/1 ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: -.1px;
+    color: var(--ink);
+  }
+
+  h1.title {
+    font-size: 2.15rem;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0 0 10px;
+    text-wrap: balance;
+  }
+  .meta {
+    font: 13px/1.5 ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--mute);
+    letter-spacing: .02em;
+    margin: 0 0 34px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .meta b { color: var(--body); font-weight: 600; }
+
+  .lede {
+    font-size: 1.2rem;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0 0 40px;
+    text-wrap: balance;
+  }
+
+  section { margin-bottom: 38px; }
+  section:last-of-type { margin-bottom: 0; }
+
+  h2 {
+    font: 600 15px/1 ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--accent);
+    margin: 0 0 16px;
+    padding-top: 2px;
+  }
+
+  p { margin: 0 0 14px; max-width: 62ch; }
+  p:last-child { margin-bottom: 0; }
+
+  ul { margin: 0 0 14px; padding-left: 1.3em; max-width: 62ch; }
+  li { margin: 0 0 7px; }
+  li:last-child { margin-bottom: 0; }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .88em;
+    background: var(--accent-bg);
+    color: var(--ink);
+    padding: .12em .38em;
+    border-radius: 4px;
+  }
+
+  a { color: var(--accent); text-decoration-color: var(--line2); text-underline-offset: 2px; }
+  a:hover { text-decoration-color: currentColor; }
+
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; margin: 0 0 8px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font: 14.5px/1.5 ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--paper);
+  }
+  th, td { text-align: left; padding: 11px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  th {
+    font-weight: 600;
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--mute);
+    background: var(--bg);
+  }
+  td.perm { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; color: var(--ink); white-space: nowrap; }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font: 600 12px/1 ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--good);
+    background: var(--good-bg);
+    padding: 4px 10px 4px 8px;
+    border-radius: 99px;
+    white-space: nowrap;
+  }
+  .pill svg { width: 12px; height: 12px; }
+
+  .callout {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px 10px 10px 4px;
+    padding: 16px 20px;
+    font-size: 14.5px;
+  }
+  .callout p { max-width: none; }
+
+  footer.page-foot {
+    margin-top: 56px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    font: 13px/1.6 ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--mute);
+  }
+  footer.page-foot a { color: var(--mute); text-decoration-color: var(--line2); }
+
+  @media (max-width: 560px) {
+    header.masthead { padding-top: 34px; }
+    h1.title { font-size: 1.7rem; }
+    .lede { font-size: 1.05rem; }
+  }
+</style>
+
+<div class="shell">
+
+  <header class="masthead">
+    <svg class="mark" width="28" height="28" viewBox="0 0 100 100" aria-hidden="true">
+      <rect x="2" y="2" width="96" height="96" rx="23" fill="#15211F"/>
+      <rect x="34" y="30" width="32" height="40" fill="#E0A33E"/>
+      <path d="M34 40 h32 M34 50 h32 M34 60 h32" stroke="#15211F" stroke-width="4"/>
+      <rect x="25" y="21" width="50" height="10" rx="5" fill="#FBF6EC"/>
+      <rect x="25" y="69" width="50" height="10" rx="5" fill="#FBF6EC"/>
+    </svg>
+    <span class="word">Threadkeeper</span>
+  </header>
+
+  <h1 class="title">Privacy Policy</h1>
+  <p class="meta">Effective <b>August 1, 2026</b> &nbsp;&middot;&nbsp; Applies to the Threadkeeper browser extension, all versions</p>
+
+  <p class="lede">
+    Threadkeeper does not collect, transmit, or store any of your data outside
+    your own browser. There is no account, no server, and nothing to opt out of
+    &mdash; because there is nothing being sent anywhere in the first place.
+  </p>
+
+  <section>
+    <h2>What Threadkeeper does</h2>
+    <p>
+      Threadkeeper is a browser extension that reads a conversation you have open on
+      ChatGPT, Claude, or Gemini, and converts it into a Markdown, HTML, or PDF file
+      that it saves to your own computer. That conversion happens entirely inside
+      your browser.
+    </p>
+  </section>
+
+  <section>
+    <h2>Data we collect</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Category</th><th>Collected</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Conversation content</td>
+            <td><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg>Not collected</span></td>
+            <td>Read locally to build your export; never transmitted or stored by us.</td>
+          </tr>
+          <tr>
+            <td>Account or identity info</td>
+            <td><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg>Not collected</span></td>
+            <td>There is no sign-in and no account of any kind.</td>
+          </tr>
+          <tr>
+            <td>Analytics or usage tracking</td>
+            <td><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg>Not collected</span></td>
+            <td>No analytics library, no telemetry, no crash reporting.</td>
+          </tr>
+          <tr>
+            <td>Your export settings</td>
+            <td>Stored locally</td>
+            <td>Format, scope, and label preferences, kept in your browser's own <code>chrome.storage</code> and never sent anywhere.</td>
+          </tr>
+          <tr>
+            <td>Recent export log</td>
+            <td>Stored locally</td>
+            <td>Titles and dates of your last 20 exports, for your own reference. Never the conversation contents. Never leaves your browser.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Network requests</h2>
+    <p>
+      The only outbound request Threadkeeper ever makes is fetching an image that is
+      already part of the conversation you're exporting &mdash; so it can be embedded
+      into your file and the export still works offline. That request goes to the
+      image's own address (the same site or CDN the conversation is already loaded
+      from). Nothing else is ever contacted: no analytics endpoint, no update
+      server, no third party of any kind.
+    </p>
+  </section>
+
+  <section>
+    <h2>Permissions, and why each is needed</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Permission</th><th>Why it's requested</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="perm">storage</td>
+            <td>Saves your export preferences and the local export log described above.</td>
+          </tr>
+          <tr>
+            <td class="perm">activeTab</td>
+            <td>Reads the conversation on the tab you're viewing, only when you click the extension to export it.</td>
+          </tr>
+          <tr>
+            <td class="perm">scripting</td>
+            <td>Loads the export functionality into a chat tab that was already open before you installed the extension, so you don't have to reload the page first.</td>
+          </tr>
+          <tr>
+            <td class="perm">tabs</td>
+            <td>Bulk export opens each conversation you selected in a background tab, one at a time, then closes it.</td>
+          </tr>
+          <tr>
+            <td class="perm">Host access</td>
+            <td><code>chatgpt.com</code>, <code>claude.ai</code>, <code>gemini.google.com</code> &mdash; the three sites Threadkeeper reads conversations from. It has no access to any other site.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Children's privacy</h2>
+    <p>
+      Threadkeeper does not knowingly collect information from anyone, including
+      children, because it does not collect information from anyone at all.
+    </p>
+  </section>
+
+  <section>
+    <h2>Changes to this policy</h2>
+    <p>
+      If this policy ever changes, the effective date above will change with it.
+      Given that Threadkeeper's entire design is to avoid collecting data, any
+      future change would need to be a deliberate, visible decision &mdash; not
+      something that happens quietly in a version bump.
+    </p>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <div class="callout">
+      <p>
+        Questions about this policy, or about how Threadkeeper handles (or rather,
+        doesn't handle) your data, can be raised as an issue on the project's
+        repository:
+        <a href="https://github.com/bobadesiddesh1-cmyk/llm-chatsave/issues" target="_blank" rel="noopener">github.com/bobadesiddesh1-cmyk/llm-chatsave/issues</a>.
+      </p>
+    </div>
+  </section>
+
+  <footer class="page-foot">
+    Threadkeeper is open source. Read the code yourself at
+    <a href="https://github.com/bobadesiddesh1-cmyk/llm-chatsave" target="_blank" rel="noopener">github.com/bobadesiddesh1-cmyk/llm-chatsave</a>.
+  </footer>
+
+</div>

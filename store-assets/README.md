@@ -41,3 +41,15 @@ The generator lives outside the repo (session scratchpad). To rebuild: render ea
 frame at its exact canvas size in a headless browser, decode the PNG, and re-encode
 as colour type 2. Verify afterwards by reading byte 25 of the file — it must be `2`
 for screenshots/tiles and `6` for the store icon.
+
+## privacy-policy.html
+
+Source for the hosted privacy policy (published as a Claude Artifact; paste that
+URL into the Web Store's "Privacy policy URL" field). Documents, in plain language,
+that Threadkeeper collects nothing, plus a table justifying each requested
+permission — the same justifications used in the dashboard's permission-justification
+fields, kept consistent with them on purpose.
+
+**Before submitting:** the Artifact must be set to public/shareable from its own
+share menu. Artifacts are private by default — a reviewer hitting a private link
+is a rejection, not a delay.
