@@ -53,3 +53,22 @@ fields, kept consistent with them on purpose.
 **Before submitting:** the Artifact must be set to public/shareable from its own
 share menu. Artifacts are private by default — a reviewer hitting a private link
 is a rejection, not a delay.
+
+## threadkeeper-demo.mp4
+
+30fps, 1280x720, h264, ~14s, ~600KB. LinkedIn-ready demo video.
+
+Built entirely from the real product: every popup frame is a genuine screenshot
+of `threadkeeper/popup/popup.html` responding to real clicks (format toggle,
+Export, tab switches, a real bulk-run progress sequence), and the "exported
+document" scene is rendered through the actual `content/extractor.js` +
+`render/html.js` pipeline against a fixture matching the running example —
+not a mockup of a UI that doesn't exist. Scenes are composited into 1280x720
+frames in the product's ink/gold visual language, then assembled with ffmpeg's
+`xfade` crossfades.
+
+Regenerating requires the full (non-Playwright-bundled) ffmpeg — the one
+shipped alongside Playwright's browsers is a stripped build with only
+webm/vp8 output and no filters, built solely for Playwright's own internal
+video-recording feature. `apt-get install ffmpeg` pulls a build with
+libx264/xfade support.
