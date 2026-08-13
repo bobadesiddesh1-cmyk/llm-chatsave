@@ -7,6 +7,8 @@
 **Export your ChatGPT, Claude, and Gemini conversations to Markdown, PDF, or HTML.**
 One click. Formatting preserved. Runs entirely on your device.
 
+Built by [buildwithsiddesh.com](https://www.buildwithsiddesh.com/) — own the tools, not just the output.
+
 </div>
 
 ---
@@ -86,6 +88,13 @@ contained (code blocks, tables, images) helps a lot.
 ## Privacy
 
 Read the full [Privacy Policy](PRIVACY.md). Short version: nothing is collected.
+
+## Built by
+
+[**buildwithsiddesh.com**](https://www.buildwithsiddesh.com/) — an SEO leader turned
+product builder, shipping AI growth systems in the open. Most teams rent their
+growth; Threadkeeper is the same philosophy applied to your own conversations: no
+account, no cloud, nothing rented — you own every file it produces.
 
 ## License
 

@@ -63,3 +63,5 @@ repository: [github.com/bobadesiddesh1-cmyk/llm-chatsave/issues](https://github.
 
 Threadkeeper is open source — read the code yourself at
 [github.com/bobadesiddesh1-cmyk/llm-chatsave](https://github.com/bobadesiddesh1-cmyk/llm-chatsave).
+
+Built by [buildwithsiddesh.com](https://www.buildwithsiddesh.com/).

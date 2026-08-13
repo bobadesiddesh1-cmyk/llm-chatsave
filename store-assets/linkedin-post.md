@@ -26,6 +26,8 @@ Would love feedback if you try it. 🧵
 [Chrome Web Store link]
 [GitHub — it's open source]
 
+More builds like this → buildwithsiddesh.com
+
 ---
 
 ## Notes on the draft

@@ -95,6 +95,10 @@ listed at the end and the rest of the batch still completes.
 These sites change their layouts often. Threadkeeper ships several fallback
 strategies for each one, and if it truly can't read a page it greys out its icon
 rather than breaking the page you're on.
+
+
+Built by buildwithsiddesh.com — most teams rent their growth. This is what
+owning it looks like.
 ```
 
 ---

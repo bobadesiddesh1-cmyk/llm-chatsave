@@ -262,7 +262,9 @@
       '<meta name="viewport" content="width=device-width, initial-scale=1">\n' +
       "<title>" + esc(title) + "</title>\n<style>\n" + CSS + "</style>\n</head>\n<body>\n" +
       '<main class="tk-doc">\n' + bodyHtml + "\n</main>\n" +
-      '<footer class="tk-footer">Exported with Threadkeeper</footer>\n</body></html>';
+      '<footer class="tk-footer">Exported with Threadkeeper &middot; ' +
+      '<a href="https://www.buildwithsiddesh.com/" target="_blank" rel="noopener">a buildwithsiddesh.com build ' +
+      '&#8599;</a></footer>\n</body></html>';
   }
 
   var CSS = [
@@ -302,6 +304,8 @@
     ".tk-math{padding:10px 14px;border-radius:8px;overflow-x:auto;}",
     "hr{border:none;border-top:1px solid var(--border);margin:20px 0;}",
     ".tk-footer{max-width:820px;margin:0 auto;padding:16px 24px 40px;color:var(--muted);font-size:.75rem;text-align:center;}",
+    ".tk-footer a{color:var(--muted);text-decoration:none;font-weight:600;}",
+    ".tk-footer a:hover{color:var(--rule);text-decoration:underline;}",
     /* ---- Print / PDF ---- */
     "@media print{",
     "  :root{--bg:#fff;--fg:#111;--user-bg:#f4f6ff;}",

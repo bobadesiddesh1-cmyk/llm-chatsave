@@ -248,9 +248,16 @@ body {
 
 /* ---------- Footer ---------- */
 .tk-foot {
+  display: flex; flex-direction: column; gap: 3px;
   font-size: 10.5px; color: var(--mute); text-align: center;
   padding: 11px 14px 13px; border-top: 1px solid var(--line);
 }
+.tk-credit {
+  color: var(--mute); text-decoration: none; font-weight: 550;
+  transition: color .12s;
+}
+.tk-credit:hover { color: var(--gold); }
+.tk-credit:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 3px; }
 
 /* ---------- Scrollbars ---------- */
 ::-webkit-scrollbar { width: 9px; }
