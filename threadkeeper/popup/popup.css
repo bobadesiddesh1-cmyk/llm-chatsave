@@ -68,6 +68,15 @@ body {
   font-size: 10.5px; font-weight: 550; color: var(--mute);
   border: 1px solid var(--line); border-radius: 5px; padding: 2px 7px;
 }
+.tk-lib-btn {
+  appearance: none; background: none; font: inherit; cursor: pointer;
+  font-size: 10.5px; font-weight: 600; color: var(--body);
+  transition: color .12s, border-color .12s;
+}
+.tk-lib-btn:hover { color: var(--gold); border-color: var(--gold); }
+.tk-lib-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.tk-lib-btn + .tk-site { margin-left: 6px; }
+.tk-btn-block { width: 100%; margin-top: 8px; font-weight: 550; }
 
 /* ---------- Tabs ---------- */
 .tk-tabs { display: flex; gap: 2px; padding: 0 10px 10px; border-bottom: 1px solid var(--line); }

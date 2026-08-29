@@ -13,7 +13,7 @@ Threadkeeper — Export Your AI Conversations
 ## Summary / short description (132 max)
 
 ```
-Export any ChatGPT, Claude, or Gemini chat to Markdown, PDF, or HTML in one click. Bulk-export your history. 100% local.
+Export & archive ChatGPT, Claude and Gemini chats. Search every AI conversation in one private, on-device library. 100% local.
 ```
 
 ## Category
@@ -29,7 +29,24 @@ Export any ChatGPT, Claude, or Gemini chat to Markdown, PDF, or HTML in one clic
 ## Description (16,000 max)
 
 ```
-Lost a conversation you needed? Threadkeeper saves it before that happens.
+Lost a conversation you needed? Threadkeeper saves it before that happens — and
+since 2.0, it remembers everything for you.
+
+NEW IN 2.0 — THE LIBRARY
+
+You've had a thousand conversations with three different AIs. Where's the one
+where you solved that pricing problem in March? Now the answer is one search box.
+
+• Every conversation you archive — one click, an opt-in auto-archive setting, or
+  a per-site history import — lands in your Library: a searchable, on-device
+  archive across ChatGPT, Claude, and Gemini.
+• Full-text search, a clean reader view, and re-export to Markdown or HTML from
+  the archive at any time.
+• On-device AI summaries via Chrome's built-in model, when your machine has it.
+  Your conversations are never sent anywhere to be summarized.
+• Continue any archived thread in a different AI — Threadkeeper opens the site
+  and drops the transcript straight into the composer.
+• Stored only in your browser. Delete anything, or wipe it all, any time.
 
 One click turns any ChatGPT, Claude, or Gemini conversation into a clean file on
 your computer — Markdown, PDF, or HTML. Formatting survives the trip: headings,
@@ -108,17 +125,19 @@ owning it looks like.
 **Single purpose**
 
 ```
-Threadkeeper exports the user's own AI chat conversations from ChatGPT, Claude, and
-Gemini into local files (Markdown, PDF, or HTML) saved to their computer.
+Threadkeeper exports and archives the user's own AI chat conversations from
+ChatGPT, Claude, and Gemini — as local files (Markdown, PDF, or HTML) and in a
+searchable on-device library. Nothing is transmitted anywhere.
 ```
 
 **Permission justifications**
 
 - `storage` —
   ```
-  Stores the user's export preferences (default format, scope, whether to include
-  timestamps and role labels) and a local list of their 20 most recent exports
-  (titles and dates only, never conversation content). Nothing is transmitted.
+  Stores the user's export preferences (default format, scope, timestamps, role
+  labels, auto-archive on/off) and a local list of their 20 most recent exports
+  (titles and dates only). The Library archive itself lives in the extension's
+  IndexedDB on the user's device. Nothing is transmitted.
   ```
 - `activeTab` —
   ```
@@ -133,8 +152,10 @@ Gemini into local files (Markdown, PDF, or HTML) saved to their computer.
   ```
 - `tabs` —
   ```
-  Bulk export opens each conversation the user selected in a background tab, one at
-  a time, to read its contents, then closes it.
+  Bulk export and the Library's history import open each conversation the user
+  selected in a background tab, one at a time, to read its contents, then close
+  it. The "Continue in another AI" feature opens the target site in a new tab to
+  place the user's transcript into the composer.
   ```
 - Host permissions (chatgpt.com, claude.ai, gemini.google.com) —
   ```

@@ -11,7 +11,8 @@
     includeTimestamps: false,
     includeRoleLabels: true,
     imageMode: "embed",        // 'embed' | 'reference'
-    bulkOutput: "zip"          // 'zip' | 'individual'
+    bulkOutput: "zip",         // 'zip' | 'individual'
+    autoCapture: false         // auto-archive open conversations to the Library
   };
 
   var HISTORY_KEY = "tk_history";

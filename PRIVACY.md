@@ -1,6 +1,6 @@
 # Privacy Policy — Threadkeeper
 
-**Effective:** August 1, 2026
+**Effective:** August 29, 2026
 **Applies to:** the Threadkeeper browser extension, all versions
 
 Threadkeeper does not collect, transmit, or store any of your data outside your
@@ -23,6 +23,14 @@ your browser.
 | Analytics or usage tracking | **Not collected** | No analytics library, no telemetry, no crash reporting. |
 | Your export settings | Stored locally | Format, scope, and label preferences, kept in your browser's own `chrome.storage` and never sent anywhere. |
 | Recent export log | Stored locally | Titles and dates of your last 20 exports, for your own reference. Never the conversation contents. Never leaves your browser. |
+| Library archive (2.0) | Stored locally | Conversations you choose to archive — via "Add to Library", the opt-in auto-archive setting, or a history import you start — are kept in the extension's own IndexedDB on this device so you can search, re-read, and re-export them. Never transmitted anywhere. Delete individual conversations or wipe the whole archive from the Library page at any time. |
+
+## On-device AI (2.0)
+
+The Library's optional "Summarize" feature uses Chrome's built-in, on-device AI
+model (when your machine has it). Summaries are generated locally and stored in
+the same local archive. No conversation content is sent to any server — if your
+device doesn't have the on-device model, the feature simply doesn't appear.
 
 ## Network requests
 

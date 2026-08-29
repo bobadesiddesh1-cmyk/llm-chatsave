@@ -8,7 +8,7 @@ brief left something unspecified, the chosen default is logged here.
 
 - **Name:** `Threadkeeper` (brief shipped as "ChatSave"; renamed for a distinct,
   brandable identity that leans into the "never lose a valuable thread" angle).
-- **Version:** `1.0.0`.
+- **Version:** `2.0.0` — v1 was the exporter; v2 adds the Library (see the 2.0 section at the end).
 
 ## Architecture
 
@@ -174,3 +174,44 @@ states. It was rebuilt around a deliberate system:
   labels, image mode, bulk output).
 - `chrome.storage.local` → the "last 20 single exports" log (metadata only: title,
   site, format, timestamp — never conversation content).
+
+## 2.0 — The Library
+
+v2.0 turns Threadkeeper from an export utility into a local archive ("the
+Library") of every captured conversation, searchable in one full-tab page.
+Decisions that shaped it:
+
+- **The IR is the storage format.** Archived conversations are stored as the
+  same intermediate representation the extractor produces, in IndexedDB
+  (`shared/archive.js`). The existing renderers re-export anything from the
+  archive at any time, and the reader view *is* the HTML exporter's output in a
+  fully sandboxed iframe — one rendering path, no drift.
+- **All archive writes go through the background worker.** Content scripts share
+  the *page's* IndexedDB origin, not the extension's — a classic MV3 trap. Chat
+  pages therefore send `ARCHIVE_SAVE` messages to the service worker
+  (`importScripts("shared/archive.js")`), which owns the extension-origin
+  database that the Library page reads directly.
+- **Archive records use reference-mode images** (original URLs, never base64):
+  keeps message payloads and the database small. File exports keep their
+  embed-by-default behavior; only Library records differ.
+- **History import reuses the bulk engine.** The same `tk-bulk` port accepts
+  `settings.mode: "archive"`; the background extracts each conversation's IR
+  (`EXTRACT_IR`) and saves it directly, instead of rendering files.
+- **Auto-capture is opt-in and signature-throttled.** When enabled, the content
+  script re-archives only when `site|title|messageCount` changes, debounced
+  1.8s after DOM-settle — no constant re-extraction while the assistant streams.
+- **On-device AI, feature-detected.** Summaries use Chrome's built-in Summarizer
+  (Gemini Nano) when the machine has it — `self.Summarizer` with an `self.ai`
+  legacy fallback — and the button simply never appears otherwise. Zero network
+  requests either way, which keeps the privacy story intact.
+- **Handoff inserts via the editor's own input pipeline.** "Continue in …"
+  opens the target site and the content script inserts the transcript with
+  `document.execCommand("insertText")` into the composer (adapter-provided,
+  with fallback selectors), falling back to `textContent` + InputEvent, and
+  finally to the clipboard with a toast if the composer can't be found.
+  Transcripts are trimmed from the front to the most recent ~6000 chars.
+- **CSS gotcha, recorded for posterity:** author `display:flex` on a class beats
+  the UA's `[hidden]{display:none}`, which briefly un-hid the import panel.
+  `library.css` now declares `[hidden]{display:none!important}` globally.
+- **No new permissions in 2.0.** Everything runs on the existing
+  storage/activeTab/scripting/tabs grants and the same three hosts.

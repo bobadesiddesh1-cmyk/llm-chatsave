@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Threadkeeper Library</title>
+  <link rel="icon" href="../icons/icon32.png">
+  <link rel="stylesheet" href="library.css">
+</head>
+<body>
+  <header class="lb-top">
+    <img src="../icons/icon48.png" alt="" width="24" height="24" class="lb-mark">
+    <div class="lb-brand">
+      <span class="lb-name">Threadkeeper Library</span>
+      <span class="lb-stats" id="lb-stats">Loading…</span>
+    </div>
+    <div class="lb-actions">
+      <button id="lb-import" class="lb-btn">Import history</button>
+      <button id="lb-wipe" class="lb-btn lb-btn-danger">Wipe archive</button>
+    </div>
+  </header>
+
+  <!-- Import panel -->
+  <section id="lb-import-panel" class="lb-import" hidden>
+    <div class="lb-import-head">
+      <span class="lb-label">Import your conversation history</span>
+      <button id="lb-import-close" class="lb-btn lb-btn-small">Close</button>
+    </div>
+    <p class="lb-hint" id="lb-import-hint">
+      Open ChatGPT, Claude, or Gemini in another tab first — Threadkeeper reads your
+      history from there, one conversation at a time, straight into this archive.
+    </p>
+    <div class="lb-row">
+      <button id="lb-import-scan" class="lb-btn">Find open chat tabs</button>
+      <span id="lb-import-status" class="lb-hint"></span>
+    </div>
+    <div id="lb-import-tabs" class="lb-chip-row"></div>
+    <div id="lb-import-list" class="lb-pick" hidden></div>
+    <div class="lb-row" id="lb-import-run-row" hidden>
+      <button id="lb-import-run" class="lb-btn lb-btn-primary">Import selected</button>
+      <button id="lb-import-cancel" class="lb-btn" hidden>Cancel</button>
+    </div>
+    <div id="lb-import-progress" class="lb-progress" hidden>
+      <div class="lb-progress-bar"><div id="lb-import-fill"></div></div>
+      <span id="lb-import-label" class="lb-hint"></span>
+    </div>
+  </section>
+
+  <main class="lb-main">
+    <aside class="lb-side">
+      <input id="lb-search" class="lb-search" type="search"
+             placeholder="Search every conversation…" autocomplete="off">
+      <div class="lb-chip-row" id="lb-filters">
+        <button class="lb-chip is-on" data-site="">All</button>
+        <button class="lb-chip" data-site="chatgpt">ChatGPT</button>
+        <button class="lb-chip" data-site="claude">Claude</button>
+        <button class="lb-chip" data-site="gemini">Gemini</button>
+      </div>
+      <div id="lb-list" class="lb-list" role="list"></div>
+      <div id="lb-empty" class="lb-empty" hidden>
+        <p class="lb-empty-title">Your Library is empty</p>
+        <p class="lb-hint">
+          On any conversation, click the Threadkeeper icon → <strong>Add to Library</strong>.
+          Turn on <strong>auto-archive</strong> in settings to keep everything automatically,
+          or use <strong>Import history</strong> above to backfill your whole account.
+        </p>
+      </div>
+    </aside>
+
+    <section class="lb-reader">
+      <div id="lb-reader-empty" class="lb-empty lb-reader-blank">
+        <p class="lb-empty-title">Select a conversation</p>
+        <p class="lb-hint">Everything here lives only on this device — search it, re-read it, export it, or continue it in another AI.</p>
+      </div>
+      <div id="lb-reader" hidden>
+        <div class="lb-reader-head">
+          <div class="lb-reader-titles">
+            <h2 id="lb-title"></h2>
+            <span id="lb-meta" class="lb-hint"></span>
+          </div>
+          <div class="lb-toolbar">
+            <button id="lb-export-md" class="lb-btn lb-btn-small">Export .md</button>
+            <button id="lb-export-html" class="lb-btn lb-btn-small">Export .html</button>
+            <button id="lb-summarize" class="lb-btn lb-btn-small" hidden>Summarize</button>
+            <select id="lb-handoff" class="lb-select">
+              <option value="">Continue in…</option>
+              <option value="chatgpt">ChatGPT</option>
+              <option value="claude">Claude</option>
+              <option value="gemini">Gemini</option>
+            </select>
+            <button id="lb-delete" class="lb-btn lb-btn-small lb-btn-danger">Delete</button>
+          </div>
+        </div>
+        <div id="lb-summary" class="lb-summary" hidden></div>
+        <iframe id="lb-frame" class="lb-frame" sandbox title="Conversation"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <div id="lb-toast" class="lb-toast" hidden></div>
+
+  <footer class="lb-foot">
+    <span>Runs entirely on your device — nothing in this Library ever leaves it</span>
+    <a class="lb-credit" href="https://www.buildwithsiddesh.com/" target="_blank" rel="noopener">Built by buildwithsiddesh.com ↗</a>
+  </footer>
+
+  <script src="../shared/storage.js"></script>
+  <script src="../shared/archive.js"></script>
+  <script src="../render/markdown.js"></script>
+  <script src="../render/html.js"></script>
+  <script src="library.js"></script>
+</body>
+</html>

@@ -101,6 +101,21 @@
         var scroller = nav.querySelector('[class*="overflow-y-auto"], [class*="overflow-y-scroll"]');
         return scroller || nav;
       } catch (e) { return null; }
+    },
+
+    getConversationId: function () {
+      try {
+        var m = location.pathname.match(/\/c\/([\w-]+)/);
+        return m ? m[1] : null;
+      } catch (e) { return null; }
+    },
+
+    getComposer: function () {
+      try {
+        return document.querySelector("#prompt-textarea") ||
+          document.querySelector('div[contenteditable="true"].ProseMirror') ||
+          document.querySelector("form textarea");
+      } catch (e) { return null; }
     }
   };
 

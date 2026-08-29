@@ -12,6 +12,7 @@
   function grab() {
     els.timestamps = document.getElementById("set-timestamps");
     els.rolelabels = document.getElementById("set-rolelabels");
+    els.autocapture = document.getElementById("set-autocapture");
     els.saved = document.getElementById("settings-saved");
   }
 
@@ -26,6 +27,7 @@
     });
     els.timestamps.addEventListener("change", save);
     els.rolelabels.addEventListener("change", save);
+    if (els.autocapture) els.autocapture.addEventListener("change", save);
     initialized = true;
   }
 
@@ -39,6 +41,7 @@
     u.setRadio("sbulk", s.bulkOutput);
     els.timestamps.checked = !!s.includeTimestamps;
     els.rolelabels.checked = !!s.includeRoleLabels;
+    if (els.autocapture) els.autocapture.checked = !!s.autoCapture;
   }
 
   async function save() {
@@ -49,7 +52,8 @@
       imageMode: u.getRadio("simage") || "embed",
       bulkOutput: u.getRadio("sbulk") || "zip",
       includeTimestamps: els.timestamps.checked,
-      includeRoleLabels: els.rolelabels.checked
+      includeRoleLabels: els.rolelabels.checked,
+      autoCapture: !!(els.autocapture && els.autocapture.checked)
     };
     await TK.storage.saveSettings(settings);
     flashSaved();

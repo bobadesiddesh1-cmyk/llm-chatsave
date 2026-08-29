@@ -100,6 +100,22 @@
         }
       } catch (e) {}
       return null;
+    },
+
+    getConversationId: function () {
+      try {
+        var m = location.pathname.match(/\/chat\/([\w-]+)/);
+        return m ? m[1] : null;
+      } catch (e) { return null; }
+    },
+
+    getComposer: function () {
+      try {
+        return document.querySelector('div[contenteditable="true"].ProseMirror') ||
+          document.querySelector('[data-testid*="composer"] [contenteditable="true"]') ||
+          document.querySelector('div[contenteditable="true"]') ||
+          document.querySelector("fieldset textarea");
+      } catch (e) { return null; }
     }
   };
 

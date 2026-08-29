@@ -34,7 +34,24 @@
     if (initialized) return;
     grab();
     els.exportBtn.addEventListener("click", onExport);
+    els.archiveBtn = document.getElementById("single-archive");
+    if (els.archiveBtn) els.archiveBtn.addEventListener("click", onArchive);
     initialized = true;
+  }
+
+  async function onArchive() {
+    var u = TK.popup.util;
+    els.archiveBtn.disabled = true;
+    showResult("Adding to your Library…", "ok");
+    try {
+      var res = await u.sendToTab(tabId, { type: "ARCHIVE_NOW" });
+      if (res && res.ok) showResult("Saved to your Library — open it from the header any time.", "ok");
+      else showResult("Couldn't archive: " + ((res && res.error) || "unknown error"), "err");
+    } catch (e) {
+      showResult("Couldn't archive: " + String(e && e.message || e), "err");
+    } finally {
+      els.archiveBtn.disabled = false;
+    }
   }
 
   async function show() {

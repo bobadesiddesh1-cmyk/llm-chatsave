@@ -2,8 +2,10 @@
 
 **One click turns any ChatGPT, Claude, or Gemini conversation into a clean
 Markdown, PDF, or HTML file — formatting, code blocks, and images preserved.
-Bulk-export your whole conversation history. 100% local. No account, no cloud,
-no data collected.**
+And since 2.0: the Library, a searchable on-device archive of every AI
+conversation you've had, with history import, optional auto-archiving,
+on-device AI summaries, and "continue in another AI" handoff. 100% local.
+No account, no cloud, no data collected.**
 
 Threadkeeper is a Manifest V3 Chrome extension written in plain vanilla JavaScript.
 **No build step, no frameworks, no bundler** — the `threadkeeper/` folder loads
@@ -42,6 +44,12 @@ conversation (e.g. the site changed its markup); it never breaks the page.
   so exported files work fully offline (toggle to reference URLs for smaller files).
 - **100% local** — the only network requests are fetches of the conversation's own
   images (for embedding). No telemetry, no analytics, no external calls.
+- **The Library (2.0)** — a full-tab, on-device archive: save any conversation with
+  one click (or turn on auto-archive), import your whole history per site, search
+  everything full-text, re-read conversations in a clean reader, re-export any of it,
+  summarize on-device via Chrome's built-in AI when available, and hand any thread to
+  another AI ("Continue in ChatGPT/Claude/Gemini"). Stored in the extension's own
+  IndexedDB; wipe it any time.
 
 ---
 

@@ -194,6 +194,10 @@
       await TK.storage.clearHistory();
       renderHistory();
     });
+    var lib = document.getElementById("tk-open-library");
+    if (lib) lib.addEventListener("click", function () {
+      try { chrome.tabs.create({ url: chrome.runtime.getURL("library/library.html") }); } catch (e) {}
+    });
     // Show the default tab.
     switchTab("single");
   }

@@ -13,6 +13,7 @@
       <span class="tk-name">Threadkeeper</span>
       <span class="tk-tag">Export your AI conversations</span>
     </div>
+    <button class="tk-site tk-lib-btn" id="tk-open-library" title="Open your Library — every archived conversation, searchable">Library ↗</button>
     <span class="tk-site" id="tk-site" hidden></span>
   </header>
 
@@ -62,6 +63,7 @@
         </div>
 
         <button id="single-export" class="tk-btn tk-btn-primary">Export</button>
+        <button id="single-archive" class="tk-btn tk-btn-block">Add to Library</button>
         <div id="single-result" class="tk-result" hidden></div>
       </div>
     </section>
@@ -172,7 +174,9 @@
       <div class="tk-field tk-toggles">
         <label class="tk-check"><input type="checkbox" id="set-timestamps"><span>Include timestamps by default</span></label>
         <label class="tk-check"><input type="checkbox" id="set-rolelabels"><span>Include role labels by default</span></label>
+        <label class="tk-check"><input type="checkbox" id="set-autocapture"><span>Auto-archive conversations to the Library</span></label>
       </div>
+      <div class="tk-hint">Auto-archive quietly keeps every conversation you have saved in your Library while you browse. Stored only on this device — wipe it any time from the Library.</div>
       <div id="settings-saved" class="tk-saved">Saved</div>
       <p class="tk-privacy">100% local. No account, no cloud, no data collected.</p>
     </section>

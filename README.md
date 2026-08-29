@@ -30,6 +30,11 @@ links, quotes, images, and math all come through looking like the original.
   a single ZIP, with live progress and a cancel button.
 - **Offline-ready** — images are embedded in the file, so exports work with no
   internet connection.
+- **The Library (new in 2.0)** — a searchable, on-device archive of every AI
+  conversation you've had, across all three sites. One-click save, optional
+  auto-archiving, per-site history import, a clean reader view, re-export from the
+  archive, on-device AI summaries (Chrome's built-in model, when available), and
+  "Continue in another AI" handoff. Nothing ever leaves your machine.
 
 ## Privacy
 

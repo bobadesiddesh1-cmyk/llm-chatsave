@@ -117,6 +117,22 @@
         }
       } catch (e) {}
       return null;
+    },
+
+    getConversationId: function () {
+      try {
+        var m = location.pathname.match(/\/app\/([\w-]+)/);
+        return m ? m[1] : null;
+      } catch (e) { return null; }
+    },
+
+    getComposer: function () {
+      try {
+        return document.querySelector("rich-textarea .ql-editor") ||
+          document.querySelector(".ql-editor") ||
+          document.querySelector('rich-textarea div[contenteditable="true"]') ||
+          document.querySelector("textarea");
+      } catch (e) { return null; }
     }
   };
 

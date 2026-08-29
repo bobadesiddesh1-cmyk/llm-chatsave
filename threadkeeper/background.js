@@ -1,15 +1,24 @@
 /* Threadkeeper — background.js (MV3 service worker)
- * Two jobs:
+ * Four jobs:
  *   1. Reflect adapter status into the action icon/badge per tab (greyed when a
  *      site's adapters fail to detect an open conversation).
  *   2. Orchestrate bulk export: open each selected conversation in a background
  *      tab, ask its content script to extract+render, stream progress to the popup
  *      over a long-lived Port, and hand the rendered files back for ZIP assembly.
+ *      The same port also runs mode:'archive' — extract IR and save straight into
+ *      the Library instead of producing files (used by the Library's importer).
+ *   3. Own all Library (IndexedDB) writes. Content scripts share the *page's*
+ *      IndexedDB origin, not the extension's, so ARCHIVE_SAVE messages land here
+ *      and are written to the extension-origin database the Library page reads.
+ *   4. Handoff: open a target AI site and ask its content script to insert a
+ *      transcript into the composer ("Continue in ..." from the Library).
  *
  * No DOM here (workers have none), so all downloads/ZIP assembly happen in the
  * popup. This worker never makes external network requests. */
 
 "use strict";
+
+importScripts("shared/archive.js");
 
 var ICON_ON = {
   16: "icons/icon16.png", 32: "icons/icon32.png",
@@ -20,10 +29,26 @@ var ICON_OFF = {
   48: "icons/icon-off48.png", 128: "icons/icon-off128.png"
 };
 
-// ---- Icon / badge reflection ------------------------------------------------
+// ---- Message routing --------------------------------------------------------
 
-chrome.runtime.onMessage.addListener(function (msg, sender) {
-  if (!msg || msg.type !== "ADAPTER_STATUS") return;
+chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+  if (!msg) return;
+
+  if (msg.type === "ARCHIVE_SAVE") {
+    handleArchiveSave(msg.conversation)
+      .then(sendResponse)
+      .catch(function (e) { sendResponse({ ok: false, error: String(e && e.message || e) }); });
+    return true; // async
+  }
+
+  if (msg.type === "HANDOFF") {
+    handleHandoff(msg)
+      .then(sendResponse)
+      .catch(function (e) { sendResponse({ ok: false, error: String(e && e.message || e) }); });
+    return true; // async
+  }
+
+  if (msg.type !== "ADAPTER_STATUS") return;
   var tabId = sender && sender.tab && sender.tab.id;
   if (tabId == null) return;
 
@@ -44,6 +69,53 @@ chrome.runtime.onMessage.addListener(function (msg, sender) {
     }
   } catch (e) { /* action APIs can race during tab teardown; ignore */ }
 });
+
+// ---- Library writes ---------------------------------------------------------
+
+async function handleArchiveSave(c) {
+  if (!c || !c.site || !c.messages) return { ok: false, error: "Nothing to archive" };
+  var id = c.id || ("live-" + String(c.title || "conversation").toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 48));
+  var key = TK.archive.makeKey(c.site, id);
+  await TK.archive.upsert({
+    key: key,
+    site: c.site,
+    title: c.title || "Conversation",
+    url: c.url || null,
+    ir: c.messages,
+    plainText: TK.archive.irToPlainText(c.messages),
+    messageCount: c.messageCount || c.messages.length
+  });
+  return { ok: true, key: key };
+}
+
+// ---- Handoff ("Continue in ...") --------------------------------------------
+
+var HANDOFF_URLS = {
+  chatgpt: "https://chatgpt.com/",
+  claude: "https://claude.ai/new",
+  gemini: "https://gemini.google.com/app"
+};
+
+async function handleHandoff(msg) {
+  var url = HANDOFF_URLS[msg.site];
+  if (!url) return { ok: false, error: "Unknown target site" };
+  if (!msg.text) return { ok: false, error: "Nothing to hand off" };
+  var tab = await createTabActive(url);
+  await waitForReady(tab.id, function () { return false; });
+  // Give the SPA time to mount its composer.
+  await delay(1800);
+  var resp = await sendTabMessage(tab.id, { type: "HANDOFF_INSERT", text: msg.text });
+  return resp || { ok: false, error: "No response from the target tab" };
+}
+
+function createTabActive(url) {
+  return new Promise(function (resolve, reject) {
+    chrome.tabs.create({ url: url, active: true }, function (tab) {
+      if (chrome.runtime.lastError || !tab) return reject(new Error(chrome.runtime.lastError ? chrome.runtime.lastError.message : "tab create failed"));
+      resolve(tab);
+    });
+  });
+}
 
 // ---- Bulk orchestration -----------------------------------------------------
 
@@ -119,6 +191,17 @@ async function processConversation(conv, settings, isCancelled, onTab) {
   if (isCancelled()) throw new Error("Cancelled");
   // Give the SPA a moment to render the conversation body.
   await delay(SETTLE_AFTER_READY_MS);
+
+  // mode:'archive' — the Library's history importer: extract the IR and save it
+  // straight into the archive here (this worker owns the extension-origin DB);
+  // no file is produced or downloaded.
+  if (settings.mode === "archive") {
+    var ir = await sendTabMessage(tab.id, { type: "EXTRACT_IR" });
+    if (!ir || !ir.ok) throw new Error((ir && ir.error) || "Extraction failed");
+    await handleArchiveSave(ir);
+    return { archived: true, title: ir.title, warnings: null, file: null };
+  }
+
   var resp = await sendTabMessage(tab.id, { type: "EXTRACT_RENDER", settings: settings });
   if (!resp || !resp.ok) throw new Error((resp && resp.error) || "Extraction failed");
   return { file: resp.file, warnings: resp.warnings };
